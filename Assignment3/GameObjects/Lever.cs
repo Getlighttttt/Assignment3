@@ -18,11 +18,15 @@ namespace Assignment3.GameObjects
 
         public void ConnectSpikes(Spikes spikes)
         {
-            this.spikes = spikes;
-            active = true;
-            if (!this.spikes.GetActive())
+
+            if (spikes != null)
             {
-                this.spikes.Toggle();
+                this.spikes = spikes;
+                active = true;
+                if (!this.spikes.GetActive())
+                {
+                    this.spikes.Toggle();
+                }
             }
         }
 
