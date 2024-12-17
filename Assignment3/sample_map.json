@@ -1,0 +1,104 @@
+[
+	{
+		"type": "Room",
+		"name": "Room1",
+		"description": "",
+		"east": 2,
+		"objects": [
+			{
+				"type": "Lever",
+				"name": "Rusty Lever",
+				"description": "A lever that (de)activates some spikes",
+				"spikes": "Killer Spikes"
+			}
+		]
+	},
+	{
+		"type": "Room",
+		"name": "Room2",
+		"description": "",
+		"north": 6,
+		"east": 3,
+		"south": 7,
+		"west": 1,
+		"objects": [
+			{
+				"type": "Princess",
+				"name": "Atalanta",
+				"description": "A kick-ass princess ready to save her prince"
+			},
+			{
+				"type": "Sword",
+				"name": "Excalibur",
+				"description": "A sword for slaying dragons"
+			}
+		]
+	},
+	{
+		"type": "Room",
+		"name": "Room3",
+		"description": "",
+		"east": 4,
+		"west": 2,
+		"objects": [
+			{
+				"type": "Spikes",
+				"name": "Killer Spikes",
+				"description": "Sikes that will kill you unless deactivated"
+			}
+		]
+	},
+	{
+		"type": "Room",
+		"name": "Room4",
+		"description": "",
+		"east": 5,
+		"west": 3,
+		"objects": [
+			{
+				"type": "Dragon",
+				"name": "Smaug",
+				"description": "A dragon guarding the prince's cage"
+			}
+		]
+	},
+	{
+		"type": "Room",
+		"name": "Room5",
+		"description": "",
+		"west": 4,
+		"objects": [
+			{
+				"type": "Cage",
+				"name": "Steel Cage",
+				"description": "A cage with an enchanged prince in it"
+			}
+		]
+	},
+	{
+		"type": "DarkRoom",
+		"name": "Room6",
+		"description": "",
+		"south": 2,
+		"objects": [
+			{
+				"type": "Key",
+				"name": "Key",
+				"description": "A rusty key that will open any cage"
+			}
+		]
+	},
+	{
+		"type": "Room",
+		"name": "Room7",
+		"description": "",
+		"north": 2,
+		"objects": [
+			{
+				"type": "Torch",
+				"name": "Torch",
+				"description": "A regular torch that you can ignite to see in the dark"
+			}
+		]
+	}
+]
