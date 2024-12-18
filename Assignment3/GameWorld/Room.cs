@@ -26,6 +26,11 @@ namespace Assignment3.GameWorld
             this.description = description;
             this.world = world;
             objects = new List<AbstractObject>();
+
+            north = null;
+            south = null;
+            east = null;
+            west = null;
         }
 
         public void AddToRoom(AbstractObject obj)
