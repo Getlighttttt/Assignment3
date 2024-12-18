@@ -45,7 +45,6 @@ namespace Assignment3.GameWorld
         {
             if (objects.Contains(obj))
             {
-                obj.AddToRoom(null);
                 objects.Remove(obj);
             }
         }

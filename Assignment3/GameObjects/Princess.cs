@@ -18,23 +18,40 @@ namespace Assignment3.GameObjects
 
         public void AddToBackPack(IItem toBeAdded)
         {
-            throw new NotImplementedException();
+            if (backpack != null)
+            {
+                currentRoom.AddToRoom(backpack as AbstractObject);
+            }
+            backpack = toBeAdded;
+            currentRoom.RemoveFromRoom(backpack as AbstractObject);
         }
 
         public void EmptyBackPack()
         {
-            throw new NotImplementedException();
+            if (backpack != null)
+            {
+                currentRoom.AddToRoom(backpack as AbstractObject);
+                backpack = null;
+            }
         }
 
         public override void ChangeHealth(int delta)
         {
-            throw new NotImplementedException();
+            health = Math.Max(0, Math.Min(health + delta, 100));
+            currentRoom.GetWorld().SetLoss();
         }
 
         public void MoveToRoom(Room newRoom)
         {
-            throw new NotImplementedException();
+            if (backpack != null)
+            {
+                (backpack as AbstractObject).AddToRoom(newRoom);
+            }
+
+            currentRoom = newRoom;
         }
+
+        public IItem GetBackpack () { return backpack; }
 
         public void ProcessInput(string userInput)
         {

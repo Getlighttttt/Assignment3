@@ -9,7 +9,7 @@ namespace Assignment3.GameObjects
     public class Lever : AbstractObject, IUsable
     {
         private bool active;
-        public Spikes spikes;
+        private Spikes spikes;
 
         public Lever(string name, string description, Spikes spikes) : base(name, description)
         {

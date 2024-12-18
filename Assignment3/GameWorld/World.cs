@@ -45,17 +45,7 @@ namespace Assignment3.GameWorld
 
         public void RunGame()
         {
-            foreach (Room room in map)
-            {
-                foreach (AbstractObject obj in room.GetObjects())
-                {
-                    if (obj is Lever)
-                    {
-                        Console.WriteLine((obj as Lever).spikes);
-                    }
-                }
-            }
-            /*while (!won && !done && !lost)
+            while (!won && !done && !lost)
             {
                 foreach (Room room in map)
                 {
@@ -73,7 +63,7 @@ namespace Assignment3.GameWorld
             if (lost)
             {
                 Console.WriteLine("YOU LOSE!");
-            }*/
+            }
         }
 
         public void LoadMap(string mapPath)
@@ -121,6 +111,7 @@ namespace Assignment3.GameWorld
                     }
 
                     room.AddToRoom(obj);
+                    obj.AddToRoom(room);
                 }
             }
 

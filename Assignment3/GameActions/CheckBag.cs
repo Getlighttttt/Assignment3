@@ -13,7 +13,11 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            throw new NotImplementedException();
+            AbstractObject backpack = (actor as Princess).GetBackpack() as AbstractObject;
+            if (backpack != null)
+            {
+                Console.WriteLine($"The princess has {backpack.GetName()} in her backpack");
+            }
         }
     }
 }

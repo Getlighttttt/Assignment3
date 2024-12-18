@@ -13,7 +13,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            throw new NotImplementedException();
+            actor.GetRoom().GetWorld().SetDone();
         }
     }
 }
