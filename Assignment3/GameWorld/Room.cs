@@ -68,6 +68,7 @@ namespace Assignment3.GameWorld
             }
         }
 
+
         public AbstractObject GetObjectWithName(string name)
         {
             return objects.FirstOrDefault(obj => obj.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));

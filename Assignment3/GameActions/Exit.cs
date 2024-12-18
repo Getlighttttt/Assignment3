@@ -13,6 +13,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
+            if (actor == null) return;
             actor.GetRoom().GetWorld().SetDone();
         }
     }

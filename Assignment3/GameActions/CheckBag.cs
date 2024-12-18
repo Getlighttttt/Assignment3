@@ -13,6 +13,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
+            if (actor == null) return;
             AbstractObject backpack = (actor as Princess).GetBackpack() as AbstractObject;
             if (backpack != null)
             {

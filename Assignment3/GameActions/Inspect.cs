@@ -18,6 +18,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
+            if (actor == null) return;
             if (toBeExplored != null && (toBeExplored.GetRoom() == actor.GetRoom() || toBeExplored == ((actor as Princess).GetBackpack() as AbstractObject)))
             {
                 Console.WriteLine(toBeExplored.GetDescription());

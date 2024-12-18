@@ -18,6 +18,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
+            if (actor == null) return;
             throw new NotImplementedException();
         }
     }

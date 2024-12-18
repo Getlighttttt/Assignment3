@@ -19,7 +19,30 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            throw new NotImplementedException();
+            if (actor == null) return;
+
+            Room room = actor.GetRoom();
+
+            if (room.GetObjectNames().Contains("Smaug"))
+            {
+                Console.WriteLine("There is a dragon in the current room");
+                return;
+            }
+
+            if (room.GetDirections().Contains(direction.ToString().ToLower()))
+            {
+                actor.AddToRoom(room.GetNeighbor(direction));
+                IItem backpack = (actor as Princess).GetBackpack();
+                
+                if (backpack != null)
+                {
+                    (backpack as AbstractObject).AddToRoom(room.GetNeighbor(direction));
+                }
+            }
+            else
+            {
+                Console.WriteLine("I cannot go there.");
+            }
         }
     }
 }

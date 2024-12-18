@@ -18,7 +18,15 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            throw new NotImplementedException();
+            if (actor == null) return;
+            if (toBeKissed != null && (toBeKissed as AbstractActor).GetRoom() == actor.GetRoom())
+            {
+                toBeKissed.Kissed();
+            }
+            else
+            {
+                Console.WriteLine("I do not understand what you mean.");
+            }
         }
     }
 }
