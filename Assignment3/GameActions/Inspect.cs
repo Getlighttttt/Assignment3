@@ -1,4 +1,5 @@
 ﻿using Assignment3.GameObjects;
+using Assignment3.GameWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            if (actor == null) return;
-            if (toBeExplored != null && (toBeExplored.GetRoom() == actor.GetRoom() || toBeExplored == ((actor as Princess).GetBackpack() as AbstractObject)))
+            if (actor == null || actor is not Princess) return;
+            if (toBeExplored != null && (actor.GetRoom().GetObjectWithName(toBeExplored.GetName()) != null || toBeExplored == ((actor as Princess).GetBackpack() as AbstractObject)))
             {
                 Console.WriteLine(toBeExplored.GetDescription());
             }

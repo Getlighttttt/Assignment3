@@ -18,8 +18,15 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            if (actor == null) return;
-            throw new NotImplementedException();
-        }
+            if (actor == null && actor is Princess) return;
+            if (toBeUsed is IUsable)
+            {
+                toBeUsed.Use();
+            }
+            else
+            {
+                Console.WriteLine("I do not understand what you mean.");
+            }
+}
     }
 }

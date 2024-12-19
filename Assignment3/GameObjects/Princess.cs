@@ -1,7 +1,10 @@
-﻿using Assignment3.GameWorld;
+﻿using Assignment3.GameActions;
+using Assignment3.GameWorld;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,9 +24,10 @@ namespace Assignment3.GameObjects
             if (backpack != null)
             {
                 currentRoom.AddToRoom(backpack as AbstractObject);
+                (backpack as AbstractObject).AddToRoom(currentRoom);
             }
             backpack = toBeAdded;
-            currentRoom.RemoveFromRoom(backpack as AbstractObject);
+            currentRoom.RemoveFromRoom(toBeAdded as AbstractObject);
         }
 
         public void EmptyBackPack()
@@ -31,6 +35,7 @@ namespace Assignment3.GameObjects
             if (backpack != null)
             {
                 currentRoom.AddToRoom(backpack as AbstractObject);
+                (backpack as AbstractObject).AddToRoom(currentRoom);
                 backpack = null;
             }
         }
@@ -48,14 +53,127 @@ namespace Assignment3.GameObjects
                 (backpack as AbstractObject).AddToRoom(newRoom);
             }
 
-            currentRoom = newRoom;
+            AddToRoom(newRoom);
         }
 
         public IItem GetBackpack () { return backpack; }
 
         public void ProcessInput(string userInput)
         {
-            throw new NotImplementedException();
+            string[] inputParts = userInput.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            if (inputParts.Length == 0)
+            {
+                Console.WriteLine("I do not understand what you mean.");
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < inputParts.Length; i++)
+                {
+                    inputParts[i] = inputParts[i].ToLower();
+                }
+            }
+
+            if (inputParts.Length == 1)
+            {
+                string command = inputParts[0];
+                if (command == "exit")
+                {
+                    Exit exit = new Exit();
+                    exit.Execute(this);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("I do not understand what you mean.");
+                    return;
+                }
+            }
+
+            if (inputParts[0] == "check" && inputParts[1] == "bag" && inputParts.Length == 2)
+            {
+                if (backpack != null)
+                {
+                    CheckBag check = new CheckBag();
+                    check.Execute(this);
+                }
+                return;
+            }
+            else if (inputParts[0] == "inspect" && inputParts.Length == 2) {
+                AbstractObject obj = currentRoom.GetObjectWithName(inputParts[1]);
+                if (obj != null)
+                {
+                    Inspect inspect = new Inspect(obj);
+                    inspect.Execute(this);
+                    return;
+                }
+                else if (backpack != null)
+                {
+                    if ((backpack as AbstractObject).GetName() == inputParts[1])
+                    {
+                        Inspect inspect = new Inspect(backpack as AbstractObject);
+                        inspect.Execute(this);
+                        return;
+                    }
+                }
+            }
+            else if (inputParts[0] == "kiss" && inputParts.Length == 2)
+            {
+                IPrince prince = (currentRoom.GetObjectWithName(inputParts[1]) as IPrince);
+                Kiss kiss = new Kiss(prince);
+                return;
+            }
+            else if (inputParts[0] == "look" && inputParts[1] == "around" && inputParts.Length == 2)
+            {
+                LookAround look = new LookAround();
+                look.Execute(this);
+                return;
+            }
+            else if (inputParts[0] == "move" && new[] {"north", "south", "east", "west" }.Contains(inputParts[1]) && inputParts.Length == 2)
+            {
+                Move move = new Move(Enum.Parse<Directions>(inputParts[1], true));
+                move.Execute(this);
+                return;
+            }
+            else if (inputParts[0] == "pick" && inputParts[1] == "up" && inputParts.Length == 3)
+            {
+                IItem item = (currentRoom.GetObjectWithName(inputParts[2]) as IItem);
+                PickUp pick = new PickUp(item);
+                pick.Execute(this);
+                return;
+            }
+            else if (inputParts[0] == "put" && inputParts[1] == "down" && inputParts.Length == 2)
+            {
+                PutDown put = new PutDown();
+                put.Execute(this);
+                return;
+            }
+            else if (inputParts[0] == "use" && inputParts.Length == 2)
+            {
+                if (backpack != null)
+                {
+                    if ((backpack as AbstractObject).GetName() == inputParts[1])
+                    {
+                        Use use = new Use((backpack as IUsable));
+                        use.Execute(this);
+                        return;
+                    }
+                }
+
+                AbstractObject obj = currentRoom.GetObjectWithName(inputParts[1]);
+                if (obj != null)
+                {
+                    Use use = new Use((backpack as IUsable));
+                    use.Execute(this);
+                    return;
+                }
+            }
+            else
+            {
+                Console.WriteLine("I do not understand what you mean.");
+                return;
+            }
         }
 
         public override void Update()

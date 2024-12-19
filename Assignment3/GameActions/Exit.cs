@@ -13,7 +13,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            if (actor == null) return;
+            if (actor == null || actor is not Princess) return;
             actor.GetRoom().GetWorld().SetDone();
         }
     }

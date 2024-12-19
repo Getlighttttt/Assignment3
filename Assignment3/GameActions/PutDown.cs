@@ -13,8 +13,15 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            if (actor == null) return;
-            throw new NotImplementedException();
+            if (actor == null && actor is Princess) return;
+            if ((actor as Princess).GetBackpack() == null)
+            {
+                Console.WriteLine("There is nothing in my backpack.");
+            }
+            else
+            {
+                (actor as Princess).EmptyBackPack();
+            }
         }
     }
 }

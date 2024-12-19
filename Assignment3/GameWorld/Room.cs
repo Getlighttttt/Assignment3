@@ -116,6 +116,11 @@ namespace Assignment3.GameWorld
             return name;
         }
 
+        public string GetDescription()
+        {
+            return description;
+        }
+
         public World GetWorld()
         {
             return world;

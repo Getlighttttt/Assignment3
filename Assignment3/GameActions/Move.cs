@@ -19,7 +19,7 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            if (actor == null) return;
+            if (actor == null && actor is Princess) return;
 
             Room room = actor.GetRoom();
 
@@ -31,13 +31,7 @@ namespace Assignment3.GameActions
 
             if (room.GetDirections().Contains(direction.ToString().ToLower()))
             {
-                actor.AddToRoom(room.GetNeighbor(direction));
-                IItem backpack = (actor as Princess).GetBackpack();
-                
-                if (backpack != null)
-                {
-                    (backpack as AbstractObject).AddToRoom(room.GetNeighbor(direction));
-                }
+                (actor as Princess).MoveToRoom(room.GetNeighbor(direction));
             }
             else
             {

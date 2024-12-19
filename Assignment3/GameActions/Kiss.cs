@@ -19,7 +19,7 @@ namespace Assignment3.GameActions
         public void Execute(AbstractActor actor)
         {
             if (actor == null) return;
-            if (toBeKissed != null && (toBeKissed as AbstractActor).GetRoom() == actor.GetRoom())
+            if (toBeKissed != null && actor.GetRoom().GetObjectWithName((toBeKissed as AbstractActor).GetName()) != null)
             {
                 toBeKissed.Kissed();
             }

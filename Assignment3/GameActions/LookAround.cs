@@ -13,23 +13,25 @@ namespace Assignment3.GameActions
 
         public void Execute(AbstractActor actor)
         {
-            if (actor == null) return;
+            if (actor == null && actor is Princess) return;
 
-            string backpackName = null;
-            if ((actor as Princess).GetBackpack() is AbstractObject backpackObject)
+            string backpackName = "";
+            if ((actor as Princess).GetBackpack() is AbstractObject backpackObject && backpackObject != null)
             {
                 backpackName = backpackObject.GetName();
             }
-
+    
             List<string> names = actor.GetRoom().GetObjectNames();
             names = names.Where(name => name != actor.GetName() && name != backpackName).ToList();
 
             if (names.Count == 0)
             {
+                Console.WriteLine(actor.GetRoom().GetDescription());
                 Console.WriteLine("You don’t see anything.");
             }
             else
             {
+                Console.WriteLine(actor.GetRoom().GetDescription());
                 Console.WriteLine($"You see: {string.Join(" ", names)}");   
             }
         }
