@@ -45,5 +45,10 @@ namespace Assignment3.GameObjects
         {
             return !wasUsed;
         }
+
+        public bool IsActive()
+        {
+            return isActive;
+        }
     }
 }

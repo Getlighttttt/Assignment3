@@ -75,7 +75,7 @@ namespace Assignment3.GameWorld
             // A dictionary to store rooms by their index for easy neighbor linking
             Dictionary<int, Room> roomDictionary = new Dictionary<int, Room>();
 
-            Dictionary<string, Lever> levers = new Dictionary<string, Lever>();
+            Dictionary<Lever, string> levers = new Dictionary<Lever, string>();
             // Step 1: Create all rooms and objects
             foreach (var roomData in jsonMap)
             {
@@ -107,7 +107,7 @@ namespace Assignment3.GameWorld
                     if (objType.ToLower() == "lever")
                     {
                         string spikesName = objData["spikes"].ToString();
-                        levers[spikesName] = obj as Lever;
+                        levers[obj as Lever] = spikesName;
                     }
 
                     room.AddToRoom(obj);
@@ -117,12 +117,12 @@ namespace Assignment3.GameWorld
 
             foreach (Room room in map)
             {
-                foreach (AbstractObject obj in room.GetObjects())
+                foreach (KeyValuePair<Lever, string> keyValue in levers)
                 {
-                    if (obj is Spikes)
+                    Spikes? spikes = (room.GetObjectWithName(keyValue.Value) as Spikes);
+                    if (spikes != null)
                     {
-                        Lever lever = levers[obj.GetName()];
-                        lever.ConnectSpikes(obj as Spikes);
+                        keyValue.Key.ConnectSpikes(spikes);
                     }
                 }
             }

@@ -13,7 +13,7 @@ namespace Assignment3.GameWorld
 
         public override List<string> GetObjectNames()
         {
-            if (objects.OfType<Torch>().Any(torch => (torch as Torch).WasUsed()))
+            if (objects.OfType<Torch>().Any(torch => (torch as Torch).IsActive()))
             {
                 return objects.Select(obj => obj.GetName()).ToList();
             }

@@ -43,5 +43,10 @@ namespace Assignment3.GameObjects
         {
             return false;
         }
+
+        public Spikes GetSpikes()
+        {
+            return spikes;
+        }
     }
 }
