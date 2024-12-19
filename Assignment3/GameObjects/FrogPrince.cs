@@ -14,7 +14,10 @@ namespace Assignment3.GameObjects
 
         public void Kissed()
         {
-            currentRoom.AddToRoom(new HumanPrince(name, description));
+            HumanPrince prince = new HumanPrince(name, description);
+            currentRoom.AddToRoom(prince);
+            prince.AddToRoom(currentRoom);
+
             currentRoom.RemoveFromRoom(this);
         }
     }

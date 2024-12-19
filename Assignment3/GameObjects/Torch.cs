@@ -34,7 +34,6 @@ namespace Assignment3.GameObjects
             if (isActive)
             {
                 running++;
-
                 if (running >= 3)
                 {
                     isActive = false;

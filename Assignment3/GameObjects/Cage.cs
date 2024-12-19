@@ -21,6 +21,7 @@ namespace Assignment3.GameObjects
         {
             locked = false;
             currentRoom.AddToRoom(captive as AbstractActor);
+            (captive as AbstractActor).AddToRoom(currentRoom);
         }
     }
 }
