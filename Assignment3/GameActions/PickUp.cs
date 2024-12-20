@@ -21,7 +21,7 @@ namespace Assignment3.GameActions
             if (actor == null && actor is Princess) return;
             if (toBePicked is IItem)
             {
-                if ((actor as Princess).GetBackpack() == null)
+                if ((actor as Princess).GetBackpack() != null)
                 {
                     Console.WriteLine("My backpack is full.");
                 }

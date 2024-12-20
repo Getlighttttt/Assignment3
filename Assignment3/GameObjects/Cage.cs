@@ -19,9 +19,12 @@ namespace Assignment3.GameObjects
 
         public void Open()
         {
+            if (locked)
+            {
+                currentRoom.AddToRoom(captive as AbstractActor);
+                (captive as AbstractActor).AddToRoom(currentRoom);
+            }
             locked = false;
-            currentRoom.AddToRoom(captive as AbstractActor);
-            (captive as AbstractActor).AddToRoom(currentRoom);
         }
     }
 }

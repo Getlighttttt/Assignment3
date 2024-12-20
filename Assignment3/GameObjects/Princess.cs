@@ -43,7 +43,10 @@ namespace Assignment3.GameObjects
         public override void ChangeHealth(int delta)
         {
             health = Math.Max(0, Math.Min(health + delta, 100));
-            currentRoom.GetWorld().SetLoss();
+            if (health == 0)
+            {
+                currentRoom.GetWorld().SetLoss();
+            }
         }
 
         public void MoveToRoom(Room newRoom)
@@ -54,6 +57,7 @@ namespace Assignment3.GameObjects
             }
 
             AddToRoom(newRoom);
+            newRoom.AddToRoom(this);
         }
 
         public IItem GetBackpack () { return backpack; }
@@ -100,7 +104,8 @@ namespace Assignment3.GameObjects
                 }
                 return;
             }
-            else if (inputParts[0] == "inspect" && inputParts.Length == 2) {
+            else if (inputParts[0] == "inspect") {
+                inputParts[1] = string.Join(" ", inputParts.Skip(1));
                 AbstractObject obj = currentRoom.GetObjectWithName(inputParts[1]);
                 if (obj != null)
                 {
@@ -110,18 +115,25 @@ namespace Assignment3.GameObjects
                 }
                 else if (backpack != null)
                 {
-                    if ((backpack as AbstractObject).GetName() == inputParts[1])
+                    if ((backpack as AbstractObject).GetName().ToLower() == inputParts[1])
                     {
                         Inspect inspect = new Inspect(backpack as AbstractObject);
                         inspect.Execute(this);
                         return;
                     }
                 }
+                else
+                {
+                    Console.WriteLine("I do not understand what you mean.");
+                    return;
+                }
             }
-            else if (inputParts[0] == "kiss" && inputParts.Length == 2)
+            else if (inputParts[0] == "kiss")
             {
+                inputParts[1] = string.Join(" ", inputParts.Skip(1));
                 IPrince prince = (currentRoom.GetObjectWithName(inputParts[1]) as IPrince);
                 Kiss kiss = new Kiss(prince);
+                kiss.Execute(this);
                 return;
             }
             else if (inputParts[0] == "look" && inputParts[1] == "around" && inputParts.Length == 2)
@@ -136,12 +148,21 @@ namespace Assignment3.GameObjects
                 move.Execute(this);
                 return;
             }
-            else if (inputParts[0] == "pick" && inputParts[1] == "up" && inputParts.Length == 3)
+            else if (inputParts[0] == "pick" && inputParts[1] == "up" && inputParts.Length > 2)
             {
-                IItem item = (currentRoom.GetObjectWithName(inputParts[2]) as IItem);
-                PickUp pick = new PickUp(item);
-                pick.Execute(this);
-                return;
+                if (currentRoom.GetObjectNames().Count != 0)
+                {
+                    inputParts[2] = string.Join(" ", inputParts.Skip(2));
+                    IItem item = (currentRoom.GetObjectWithName(inputParts[2]) as IItem);
+                    PickUp pick = new PickUp(item);
+                    pick.Execute(this);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("I do not understand what you mean.");
+                    return;
+                }
             }
             else if (inputParts[0] == "put" && inputParts[1] == "down" && inputParts.Length == 2)
             {
@@ -149,23 +170,28 @@ namespace Assignment3.GameObjects
                 put.Execute(this);
                 return;
             }
-            else if (inputParts[0] == "use" && inputParts.Length == 2)
+            else if (inputParts[0] == "use" )
             {
+                inputParts[1] = string.Join(" ", inputParts.Skip(1));
+                AbstractObject obj = currentRoom.GetObjectWithName(inputParts[1]);
                 if (backpack != null)
                 {
-                    if ((backpack as AbstractObject).GetName() == inputParts[1])
+                    if ((backpack as AbstractObject).GetName().ToLower() == inputParts[1])
                     {
-                        Use use = new Use((backpack as IUsable));
+                        Use use = new Use(backpack as IUsable);
                         use.Execute(this);
                         return;
                     }
                 }
-
-                AbstractObject obj = currentRoom.GetObjectWithName(inputParts[1]);
-                if (obj != null)
+                else if (obj != null)
                 {
-                    Use use = new Use((backpack as IUsable));
+                    Use use = new Use(obj as IUsable);
                     use.Execute(this);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("I do not understand what you mean.");
                     return;
                 }
             }
@@ -178,6 +204,10 @@ namespace Assignment3.GameObjects
 
         public override void Update()
         {
+            if (health == 0)
+            {
+                return;
+            }
             Console.WriteLine($"You are in {currentRoom.GetName()}.");
             Console.Write("You can go");
             foreach (string direction in currentRoom.GetDirections())
@@ -185,10 +215,18 @@ namespace Assignment3.GameObjects
                 Console.Write($" {direction}");
             }
             Console.WriteLine();
+            Console.WriteLine($"health: {health}");
             Console.WriteLine("What do you do?");
             string userInput = Console.ReadLine();
             ProcessInput(userInput);
             Console.WriteLine();
+            foreach (AbstractObject obj in currentRoom.GetObjects().GetRange(0, currentRoom.GetObjects().Count))
+            {
+                if (obj != this)
+                {
+                    obj.Update();
+                }
+            }
         }
     }
 }

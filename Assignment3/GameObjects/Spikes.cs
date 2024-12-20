@@ -24,9 +24,9 @@ namespace Assignment3.GameObjects
         {
             foreach (AbstractObject obj in currentRoom.GetObjects())
             {
-                if (obj is Princess)
+                if (obj is Princess && active)
                 {
-                    (obj as Princess).ChangeHealth(100);
+                    (obj as Princess).ChangeHealth(-100);
                     return;
                 }
             }

@@ -14,7 +14,7 @@ namespace Assignment3.GameObjects
 
         public void Kissed()
         {
-            HumanPrince prince = new HumanPrince(name, description);
+            HumanPrince prince = new HumanPrince(name, "prince in his human form");
             currentRoom.AddToRoom(prince);
             prince.AddToRoom(currentRoom);
 

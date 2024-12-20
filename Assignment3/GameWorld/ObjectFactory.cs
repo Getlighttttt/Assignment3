@@ -34,7 +34,7 @@ namespace Assignment3.GameWorld
                     return new Spikes(name, description);
 
                 case "sword":
-                    return new Sword(name, description, 50);
+                    return new Sword(name, description, -50);
 
                 case "torch":
                     return new Torch(name, description);

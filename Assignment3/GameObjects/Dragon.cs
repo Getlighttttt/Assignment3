@@ -15,7 +15,7 @@ namespace Assignment3.GameObjects
         public override void ChangeHealth(int delta)
         {
             health = Math.Max(0, Math.Min(health + delta, 100));
-            if (health <= 0)
+            if (health == 0)
             {
                 currentRoom.RemoveFromRoom(this);
             }
@@ -27,7 +27,7 @@ namespace Assignment3.GameObjects
             {
                 if (obj is Princess)
                 {
-                    (obj as Princess).ChangeHealth(20);
+                    (obj as Princess).ChangeHealth(-20);
                     return;
                 }
             }
