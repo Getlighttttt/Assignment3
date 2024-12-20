@@ -208,6 +208,7 @@ namespace Assignment3.GameObjects
             {
                 return;
             }
+
             Console.WriteLine($"You are in {currentRoom.GetName()}.");
             Console.Write("You can go");
             foreach (string direction in currentRoom.GetDirections())
@@ -215,18 +216,11 @@ namespace Assignment3.GameObjects
                 Console.Write($" {direction}");
             }
             Console.WriteLine();
-            Console.WriteLine($"health: {health}");
+            Console.WriteLine($"Your health: {health}");
             Console.WriteLine("What do you do?");
             string userInput = Console.ReadLine();
             ProcessInput(userInput);
             Console.WriteLine();
-            foreach (AbstractObject obj in currentRoom.GetObjects().GetRange(0, currentRoom.GetObjects().Count))
-            {
-                if (obj != this)
-                {
-                    obj.Update();
-                }
-            }
         }
     }
 }
